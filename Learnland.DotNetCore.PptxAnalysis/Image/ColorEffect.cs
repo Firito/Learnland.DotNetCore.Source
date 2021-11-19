@@ -5,9 +5,9 @@ using Learnland.DotNetCore.Extensions;
 namespace Learnland.DotNetCore.PptxAnalysis.Image
 {
     /// <summary>
-    ///     设置透明色
+    ///     PPTX颜色效果
     /// </summary>
-    public class SetTransparentColor
+    public class ColorEffect
     {
         /// <summary>
         ///     将图片<paramref name="bitmap"/>上指定的颜色<paramref name="colorA"/>替换为颜色<paramref name="colorB"/>
@@ -15,7 +15,7 @@ namespace Learnland.DotNetCore.PptxAnalysis.Image
         /// <param name="bitmap">图片</param>
         /// <param name="colorA">要被替换的颜色</param>
         /// <param name="colorB">要将<paramref name="colorA"/>替换的成颜色</param>
-        public void ReplaceColor(Bitmap bitmap, Color colorA, Color colorB)
+        public void ReplaceColor(Bitmap bitmap, System.Drawing.Color colorA, System.Drawing.Color colorB)
         {
             //这里是遍历图片中的每一个像素
             bitmap.PerPixelProcess(color =>
@@ -33,7 +33,7 @@ namespace Learnland.DotNetCore.PptxAnalysis.Image
         /// <param name="y"></param>
         /// <param name="accuracy">Rgb通道允许的误差</param>
         /// <returns></returns>
-        private bool IsSimilarColors(Color x, Color y, int accuracy = 36)
+        private bool IsSimilarColors(System.Drawing.Color x, System.Drawing.Color y, int accuracy = 36)
         {
             var offsetA = x.A - y.A;
             var offsetR = x.R - y.R;
@@ -63,7 +63,7 @@ namespace Learnland.DotNetCore.PptxAnalysis.Image
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        private double ColorDifference(Color x, Color y)
+        private double ColorDifference(System.Drawing.Color x, System.Drawing.Color y)
         {
             var m = (x.R + y.R) / 2.0;
             var r = Math.Pow(x.R - y.R, 2);
