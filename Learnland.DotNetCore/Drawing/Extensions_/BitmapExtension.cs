@@ -12,6 +12,28 @@ namespace Learnland.DotNetCore.Drawing
     public static class BitmapExtension
     {
         /// <summary>
+        ///     更改当前图像的亮度。
+        /// </summary>
+        /// <param name="bitmap">图片</param>
+        /// <param name="percentage">改变图像亮度的百分比。范围 -100..100。</param>
+        public static void SetBrightness(this Bitmap bitmap, float percentage)
+        {
+            var colorMatrix = ColorMatrices.CreateBrightnessFilter(percentage);
+            ColorMatrices.ApplyMatrix(bitmap, colorMatrix);
+        }
+
+        /// <summary>
+        ///     更改当前图像的对比度。
+        /// </summary>
+        /// <param name="bitmap">图片</param>
+        /// <param name="percentage">改变图像对比度的百分比。范围 -100..100。</param>
+        public static void SetContrast(this Bitmap bitmap, float percentage)
+        {
+            var colorMatrix = ColorMatrices.CreateContrastFilter(percentage);
+            ColorMatrices.ApplyMatrix(bitmap, colorMatrix);
+        }
+
+        /// <summary>
         ///     对图像进行逐像素处理
         /// </summary>
         /// <param name="bitmap">源图像</param>

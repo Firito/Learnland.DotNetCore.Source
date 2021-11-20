@@ -53,5 +53,43 @@ namespace Learnland.DotNetCore.PptxAnalysis.Image
         {
             bitmap.PerPixelProcess(color => color.GetDuotoneColor(color1, color2));
         }
+
+        /// <summary>
+        ///     设置冲蚀效果。
+        /// </summary>
+        /// <param name="bitmap">图片</param>
+        /// <param name="brightness">改变图像亮度的百分比。范围 -100..100。</param>
+        /// <param name="contrast">改变图像对比度的百分比。范围 -100..100。</param>
+        public void SetErosionEffect(Bitmap bitmap, float brightness, float contrast)
+        {
+            //先修改图像对比度
+            contrast = GetNearlyAmount(contrast);
+            bitmap.SetContrast(contrast);
+
+            //再修改图像亮度
+            brightness = GetNearlyAmount(brightness) / 2;
+            bitmap.SetBrightness(brightness);
+
+            //最后对图片逐像素进行混色
+            bitmap.PerPixelProcess(color => color.Blend(Color.White, 0.5));
+        }        
+        
+        /// <summary>
+        ///     获取和PPT效果近似的转化比例（0~69内使用2次方，70~79内使用3次方，80~89内使用4次方，90~99内使用5次方）
+        /// </summary>
+        /// <param name="percentage"></param>
+        /// <returns></returns>
+        private float GetNearlyAmount(float percentage)
+        {
+            var amount = (percentage + 100) / 100;
+            if (percentage > 0)
+            {
+                var x = (percentage - 60) / 10;
+                var y = 2 + (x > 0 ? x : 0);
+                amount = (float)Math.Pow(amount, y);
+            }
+
+            return amount;
+        }
     }
 }
