@@ -19,6 +19,22 @@ namespace Learnland.DotNetCore.Drawing
         }
 
         /// <summary>
+        ///     获取双色调效果颜色
+        /// </summary>
+        /// <param name="sourceColor">原始颜色</param>
+        /// <param name="clr1">决定双色调效果的颜色A</param>
+        /// <param name="clr2">决定双色调效果的颜色B</param>
+        /// <returns></returns>
+        public static Color GetDuotoneColor(this Color sourceColor, Color clr1, Color clr2)
+        {
+            var grayScale = GetGrayScale(sourceColor);
+            var r = clr1.R * (1 - grayScale) + clr2.R * grayScale;
+            var g = clr1.G * (1 - grayScale) + clr2.G * grayScale;
+            var b = clr1.B * (1 - grayScale) + clr2.B * grayScale;
+            return Color.FromArgb(sourceColor.A, (byte)r, (byte)g, (byte)b);
+        }
+
+        /// <summary>
         ///     是否是近似颜色
         /// </summary>
         /// <param name="x"></param>

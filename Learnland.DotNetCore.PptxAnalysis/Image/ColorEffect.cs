@@ -29,7 +29,7 @@ namespace Learnland.DotNetCore.PptxAnalysis.Image
         /// <summary>
         ///     设置黑白图效果
         /// </summary>
-        /// <param name="bitmap"></param>
+        /// <param name="bitmap">图片</param>
         /// <param name="threshold">像素灰度大于该阈值设为白色，否则为黑色。范围 0-1</param>
         public void SetBlackWhiteEffect(Bitmap bitmap, float threshold)
         {
@@ -41,6 +41,17 @@ namespace Learnland.DotNetCore.PptxAnalysis.Image
                 //此处需要注意不能改变原始像素的Alpha值
                 return Color.FromArgb(color.A, rgb);
             });
+        }
+
+        /// <summary>
+        ///     对图片<paramref name="bitmap"/>设置(DuotoneEffect)双色调效果
+        /// </summary>
+        /// <param name="bitmap">图片</param>
+        /// <param name="color1">决定双色调效果的颜色A</param>
+        /// <param name="color2">决定双色调效果的颜色B</param>
+        public void SetDuotoneEffect(Bitmap bitmap, Color color1, Color color2)
+        {
+            bitmap.PerPixelProcess(color => color.GetDuotoneColor(color1, color2));
         }
     }
 }
