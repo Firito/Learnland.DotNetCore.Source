@@ -5,4 +5,5 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>", Scope = "member", Target = "~M:Learnland.DotNetCore.Extensions.BitmapExtension.PerPixelProcess(System.Drawing.Bitmap,System.Func{System.Drawing.Color,System.Drawing.Color})")]
+[assembly: SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>", Scope = "member", Target = "~M:Learnland.DotNetCore.Drawing.ColorMatrices.ApplyMatrix(System.Drawing.Image,System.Drawing.Imaging.ColorMatrix)")]
+[assembly: SuppressMessage("Interoperability", "CA1416:验证平台兼容性", Justification = "<挂起>", Scope = "member", Target = "~M:Learnland.DotNetCore.Drawing.BitmapExtension.PerPixelProcess(System.Drawing.Bitmap,System.Func{System.Drawing.Color,System.Drawing.Color})")]

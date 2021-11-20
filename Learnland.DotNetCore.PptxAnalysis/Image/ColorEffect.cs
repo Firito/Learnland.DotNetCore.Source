@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using Learnland.DotNetCore.Extensions;
+using Learnland.DotNetCore.Drawing;
 
 namespace Learnland.DotNetCore.PptxAnalysis.Image
 {
@@ -15,62 +15,32 @@ namespace Learnland.DotNetCore.PptxAnalysis.Image
         /// <param name="bitmap">图片</param>
         /// <param name="colorA">要被替换的颜色</param>
         /// <param name="colorB">要将<paramref name="colorA"/>替换的成颜色</param>
-        public void ReplaceColor(Bitmap bitmap, System.Drawing.Color colorA, System.Drawing.Color colorB)
+        public void ReplaceColor(Bitmap bitmap, Color colorA, Color colorB)
         {
             //这里是遍历图片中的每一个像素
             bitmap.PerPixelProcess(color =>
             {
                 //如果当前的颜色和颜色colorA近似，则进行替换
-                var isSimilar = IsSimilarColors(color, colorA);
+                var isSimilar = color.IsSimilarColors(colorA);
                 return isSimilar ? colorB : color;
             });
         }
 
         /// <summary>
-        ///     是否是近似颜色
+        ///     设置黑白图效果
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="accuracy">Rgb通道允许的误差</param>
-        /// <returns></returns>
-        private bool IsSimilarColors(System.Drawing.Color x, System.Drawing.Color y, int accuracy = 36)
+        /// <param name="bitmap"></param>
+        /// <param name="threshold">像素灰度大于该阈值设为白色，否则为黑色。范围 0-1</param>
+        public void SetBlackWhiteEffect(Bitmap bitmap, float threshold)
         {
-            var offsetA = x.A - y.A;
-            var offsetR = x.R - y.R;
-            var offsetG = x.G - y.G;
-            var offsetB = x.B - y.B;
-
-            if (Math.Abs(offsetA) > 1)
+            //这里是遍历图片中的每一个像素
+            bitmap.PerPixelProcess(color =>
             {
-                return false;
-            }
-
-            if (offsetR == offsetG && offsetR == offsetB)
-            {
-                if (Math.Abs(offsetR) > 1)
-                {
-                    return ColorDifference(x, y) <= accuracy / 3d;
-                }
-            }
-
-            var difference = ColorDifference(x, y);
-            return difference <= accuracy;
-        }
-
-        /// <summary>
-        /// 在RGB空间上通过公式计算出加权的欧式距离
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        private double ColorDifference(System.Drawing.Color x, System.Drawing.Color y)
-        {
-            var m = (x.R + y.R) / 2.0;
-            var r = Math.Pow(x.R - y.R, 2);
-            var g = Math.Pow(x.G - y.G, 2);
-            var b = Math.Pow(x.B - y.B, 2);
-
-            return Math.Sqrt((2 + m / 256) * r + 4 * g + (2 + (255 - m) / 256) * b);
+                //如果当前的颜色灰度大于等于该阈值设为白色，否则为黑色
+                var rgb = color.GetGrayScale() >= threshold ? Color.White : Color.Black;
+                //此处需要注意不能改变原始像素的Alpha值
+                return Color.FromArgb(color.A, rgb);
+            });
         }
     }
 }

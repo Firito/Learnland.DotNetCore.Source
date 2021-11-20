@@ -4,7 +4,7 @@ using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-namespace Learnland.DotNetCore.Extensions
+namespace Learnland.DotNetCore.Drawing
 {
     /// <summary>
     ///     提供<see cref="Bitmap"/>使用的拓展方法
