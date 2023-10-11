@@ -284,7 +284,7 @@ namespace Learnland.DotNetCore.PptxAnalysis.Image
                             valueCache.Remove(minCol - 1);
                             if (maxCol > 0 && maxCol < cols)
                             {
-                                for (var y = minRow; y < maxRow; y++)
+                                for (var y = minRow; y <= maxRow; y++)
                                 {
                                     if (y > 0 && y < rows)
                                     {
